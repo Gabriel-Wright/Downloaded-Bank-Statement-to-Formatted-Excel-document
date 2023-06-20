@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="WARN">
+	<Properties>
+		<Property name="log4j2.debug">true</Property>
+	</Properties>
+	<Appenders>
+
+		<RollingFile name="DBinfoFile"
+			fileName="logs/sqliteData/DBinfolog.log"
+			filePattern="DBinfolog-%d{HH:mm:ss:SSS}.log">
+			<PatternLayout>
+				<pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</pattern>
+			</PatternLayout>
+			<SizeBasedTriggeringPolicy size="120 KB" />
+		</RollingFile>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+	</Appenders>
+	<Loggers>
+
+		<Logger name="sqliteData" level="info" additivity="true">
+			<AppenderRef ref="DBinfoFile"></AppenderRef>
+		</Logger>
+		<Root level="debug">
+			<AppenderRef ref="Console"></AppenderRef>
+		</Root>
+
+	</Loggers>
+</Configuration>
