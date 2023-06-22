@@ -18,7 +18,7 @@ public abstract class Table {
 	private String tableName;
 	private Database DB;
 	private List<String> headers;
-	protected static final Logger logger = LogManager.getLogger(Database.class.getName());
+	protected static final Logger logger = LogManager.getLogger(Table.class.getName());
 	
 	/*
 	 * =========================== GETTERS ============================
