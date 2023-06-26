@@ -9,17 +9,66 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import optionMenu.Input;
+import optionMenu.Menu;
+
 public class TableCategoryReader extends TableCategory {
+
+	private Menu categoryMenu;
+	private Input categoryInput;
+	private boolean appendOrCreateConfirm;
+	private boolean categoryNameConfirm;
+	private boolean categoryMenuChoiceConfirm;
 
 	/*
 	 * ===================CONSTRUCTORS ====================
 	 */
 
-	public TableCategoryReader(TableCategory tC) {
-		super(tC.getDB(), tC.getCategoryInput(), tC.getAppendOrCreateConfirm(), tC.getCategoryNameConfirm(),
-				tC.getCategoryMenuChoiceConfirm());
+	public TableCategoryReader(TableCategory tC, Input categoryInput, boolean appendOrCreateConfirm, boolean categoryNameConfirm, boolean categoryMenuChoiceConfirm) {
+		super(tC.getDB());
+		this.appendOrCreateConfirm=appendOrCreateConfirm;
+		this.categoryNameConfirm=categoryNameConfirm;
+		this.categoryMenuChoiceConfirm=categoryMenuChoiceConfirm;
+		this.categoryInput=categoryInput;
+		setCategoryMenu(new Menu("CategoryMenu",null, categoryInput));
 	}
 
+	/*
+	 * ================== GETTERS =================
+	 */
+	public Menu getCategoryMenu() {
+		return categoryMenu;
+	}
+
+	public Input getCategoryInput() {
+		return categoryInput;
+	}
+	
+	public boolean getAppendOrCreateConfirm() {
+		return appendOrCreateConfirm;
+	}
+
+	public boolean getCategoryNameConfirm() {
+		return categoryNameConfirm;
+	}
+
+	public boolean getCategoryMenuChoiceConfirm() {
+		return categoryMenuChoiceConfirm;
+	}
+
+	
+	/*
+	 * ================== SETTERS =================
+	 */
+	
+	public void setCategoryMenu(Menu categoryMenu) {
+		this.categoryMenu = categoryMenu;
+	}
+	
+	public void setCategoryInput(Input categoryInput) {
+		this.categoryInput=categoryInput;
+	}
+	
 	/*
 	 * ================== METHODS =================
 	 */

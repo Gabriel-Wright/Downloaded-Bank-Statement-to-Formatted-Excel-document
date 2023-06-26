@@ -10,59 +10,19 @@ import java.util.List;
 import java.sql.SQLException;
 
 public class TableCategory extends Table {
-
-	private Menu categoryMenu;
-	private Input categoryInput;
-	private boolean appendOrCreateConfirm;
-	private boolean categoryNameConfirm;
-	private boolean categoryMenuChoiceConfirm;
-
+	
+	
+	
 	/*
 	 * ===================CONSTRUCTORS ====================
 	 */
 
-	public TableCategory(Database DB, Input categoryInput, boolean appendOrCreateConfirm, boolean categoryNameConfirm,
-			boolean categoryMenuChoiceConfirm) {
+	public TableCategory(Database DB) {
 		setDB(DB);
-		this.appendOrCreateConfirm = appendOrCreateConfirm;
-		this.categoryNameConfirm = categoryNameConfirm;
-		this.categoryMenuChoiceConfirm = categoryMenuChoiceConfirm;
-		this.categoryInput=categoryInput;
-		categoryMenu = new Menu("Category", null, categoryInput);
+		setTableName("Category");
 		setHeaders(categoryHeaders());
 	}
 
-	/*
-	 * ====================GETTERS===========================
-	 */
-
-	public Menu getCategoryMenu() {
-		return categoryMenu;
-	}
-
-	public Input getCategoryInput() {
-		return categoryInput;
-	}
-	
-	public boolean getAppendOrCreateConfirm() {
-		return appendOrCreateConfirm;
-	}
-
-	public boolean getCategoryNameConfirm() {
-		return categoryNameConfirm;
-	}
-
-	public boolean getCategoryMenuChoiceConfirm() {
-		return categoryMenuChoiceConfirm;
-	}
-
-	/*
-	 * =====================SETTERS========================
-	 */
-
-	public void setCategoryMenu(Menu categoryMenu) {
-		this.categoryMenu = categoryMenu;
-	}
 
 	/*
 	 * =========== ABSTRACT IMPLEMENTATION ============

@@ -12,8 +12,7 @@ public class TableCategoryWriter extends TableCategory {
 	 */
 
 	public TableCategoryWriter(TableCategory tC) {
-		super(tC.getDB(), tC.getCategoryInput(), tC.getAppendOrCreateConfirm(), tC.getCategoryNameConfirm(),
-				tC.getCategoryMenuChoiceConfirm());
+		super(tC.getDB());
 	}
 
 	/*

@@ -35,6 +35,10 @@ public abstract class Table {
 	public List<String> getHeaders() {
 		return headers;
 	}
+	
+	public Logger getLogger() {
+		return logger;
+	}
 
 	/*
 	 * =========================== SETTERS ============================
