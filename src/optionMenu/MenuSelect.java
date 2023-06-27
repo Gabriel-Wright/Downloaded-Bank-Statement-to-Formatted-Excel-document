@@ -21,6 +21,18 @@ public class MenuSelect{
 	}
 
 	/*
+	 * =================GETTERS====================
+	 */
+	
+	public Menu getMenu() {
+		return menu;
+	}
+	
+	public Input getInput() {
+		return input;
+	}
+	
+	/*
 	 * =========================== METHODS ===========================
 	 */
 

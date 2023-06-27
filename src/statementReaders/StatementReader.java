@@ -9,7 +9,7 @@ import javax.swing.JFileChooser;
 
 import config.AppConfig;
 
-public class statementReader {
+ public abstract class StatementReader {
 	
 	private AppConfig config;
 	private File CONFIG_FILE;
@@ -19,19 +19,18 @@ public class statementReader {
 	private File statement;	
 
 	
-	protected static final Logger logger = LogManager.getLogger(statementReader.class.getName());
+	protected static final Logger logger = LogManager.getLogger(StatementReader.class.getName());
 
 	
-	/*
-	 * ===================CONSTRUCTORS ====================
-	 */
-	
-	//assigns CONFIG_FILE & statementFolder Files to statementReader object
-	public statementReader(AppConfig config){
-		this.config = config;
-		this.CONFIG_FILE=config.getConfig();
-		this.statementFolder = new File(config.checkSetting("statementFolder")); 
-	}
+//	/*
+//	 * ===================CONSTRUCTORS ====================
+//	 */
+//	
+//	//assigns CONFIG_FILE & statementFolder Files to statementReader object
+//	public StatementReader(AppConfig config){
+//		this.config = config;
+//		this.CONFIG_FILE=config.getConfigFile();
+//	}
 	
 	/*
 	 * ================== GETTERS =================
@@ -52,10 +51,32 @@ public class statementReader {
 	public File getStatement() {
 		return statement;
 	}
+	
+	/*
+	 * ================== SETTERS =================
+	 */
 
+	public void setConfig(AppConfig config) {
+		this.config=config;
+	}
+	
+	public void setConfig_File(File configFile) {
+		this.CONFIG_FILE=configFile;
+	}
+	
 	/*
 	 * ================== METHODS =================
 	 */
+	
+	public void loadStatementFolder() {
+		//Attempt to load statementFolder, if setting exists. If it doesn't then flair and log.
+		try {
+			this.statementFolder = new File(config.checkSetting("statementFolder")); 
+			logger.info("Setting found: statementFolder.");
+		} catch (NullPointerException e) {
+			logger.error("Unable to find setting statementFolder");
+		}
+	}
 	
 	public void selectStatement() {
 		JFileChooser fileChooser = new JFileChooser();

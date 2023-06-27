@@ -31,7 +31,7 @@ public class AppConfig {
 			}
 		}
 		//assign config file
-		this.setConfig(new File(CONFIG_FILE_PATH));
+		this.setConfigFile(new File(CONFIG_FILE_PATH));
 		logger.info("config.properties file found: "+CONFIG_FILE_PATH.toString());
 	}
 	
@@ -39,7 +39,7 @@ public class AppConfig {
 	 * ================== GETTERS =================
 	 */
 	
-	public File getConfig() {
+	public File getConfigFile() {
 		return config;
 	}
 	
@@ -51,7 +51,7 @@ public class AppConfig {
 	 * ================== SETTERS =================
 	 */	
 	
-	public void setConfig(File config) {
+	public void setConfigFile(File config) {
 		this.config = config;
 	}
 

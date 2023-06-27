@@ -48,12 +48,4 @@ class ConfigTest {
         String settingValue = appConfig.checkSetting("example.setting");
         Assertions.assertNull(settingValue, "Setting value should be null if not found");
     }
-
-    @Test
-    public void testStatementConfigSetStatementFolder() {
-    	AppConfig config = mock(AppConfig.class);
-    	StatementConfig stConfig = mock(StatementConfig.class);
-    	
-    	
-    }
 }

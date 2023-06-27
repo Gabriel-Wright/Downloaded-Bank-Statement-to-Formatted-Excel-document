@@ -21,7 +21,7 @@ public class StatementConfig {
 	 */
 
 	public StatementConfig(AppConfig config) {
-		this.CONFIG_FILE = config.getConfig();
+		this.CONFIG_FILE = config.getConfigFile();
 		this.logger = config.getLogger();
 	}
 

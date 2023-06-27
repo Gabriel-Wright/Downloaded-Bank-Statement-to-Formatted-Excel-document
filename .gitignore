@@ -2,5 +2,6 @@
 /target/
 /DB/
 /fileTest/
+/logs/
 .classpath
 .project

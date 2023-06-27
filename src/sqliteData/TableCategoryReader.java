@@ -14,87 +14,19 @@ import optionMenu.Menu;
 
 public class TableCategoryReader extends TableCategory {
 
-	private Menu categoryMenu;
-	private Input categoryInput;
-	private boolean appendOrCreateConfirm;
-	private boolean categoryNameConfirm;
-	private boolean categoryMenuChoiceConfirm;
-
 	/*
 	 * ===================CONSTRUCTORS ====================
 	 */
 
-	public TableCategoryReader(TableCategory tC, Input categoryInput, boolean appendOrCreateConfirm, boolean categoryNameConfirm, boolean categoryMenuChoiceConfirm) {
-		super(tC.getDB());
-		this.appendOrCreateConfirm=appendOrCreateConfirm;
-		this.categoryNameConfirm=categoryNameConfirm;
-		this.categoryMenuChoiceConfirm=categoryMenuChoiceConfirm;
-		this.categoryInput=categoryInput;
-		setCategoryMenu(new Menu("CategoryMenu",null, categoryInput));
-	}
-
-	/*
-	 * ================== GETTERS =================
-	 */
-	public Menu getCategoryMenu() {
-		return categoryMenu;
-	}
-
-	public Input getCategoryInput() {
-		return categoryInput;
+	public TableCategoryReader(TableCategory tC) {
+		super(tC.getDB(),tC.getCategoryMenu());
 	}
 	
-	public boolean getAppendOrCreateConfirm() {
-		return appendOrCreateConfirm;
-	}
-
-	public boolean getCategoryNameConfirm() {
-		return categoryNameConfirm;
-	}
-
-	public boolean getCategoryMenuChoiceConfirm() {
-		return categoryMenuChoiceConfirm;
-	}
-
-	
-	/*
-	 * ================== SETTERS =================
-	 */
-	
-	public void setCategoryMenu(Menu categoryMenu) {
-		this.categoryMenu = categoryMenu;
-	}
-	
-	public void setCategoryInput(Input categoryInput) {
-		this.categoryInput=categoryInput;
-	}
-	
+		
 	/*
 	 * ================== METHODS =================
 	 */
 
-	// Refresh stored categoryOptions for categoryMenu.
-	public void refreshCategoryOptions() {
-		// Initialise a List so that we do not need to know size of array.
-		List<String> categories = new ArrayList<>();
-
-		try (Connection conn = DriverManager.getConnection(getDB().getUrl());
-				Statement stmt = conn.createStatement();
-				ResultSet resultSet = stmt.executeQuery("SELECT DISTINCT Category FROM Category;")) {
-			// read all results
-			while (resultSet.next()) {
-				String category = resultSet.getString("Category");
-				categories.add(category);
-			}
-
-		} catch (SQLException e) {
-			logger.error("Error when attempting to refresh categoryOptions for " + getTableName() + "table.");
-		}
-
-		String[] options = categories.toArray(new String[categories.size()]);
-		logger.info("Set options for categoryMenu:" + String.join(", ", options));
-		getCategoryMenu().setOptions(options);
-	}
 
 	// Checks whether Category exists within categoryTable
 	public boolean checkCategoryOption(String category) {
