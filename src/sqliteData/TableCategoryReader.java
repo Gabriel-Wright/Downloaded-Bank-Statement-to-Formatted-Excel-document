@@ -92,7 +92,7 @@ public class TableCategoryReader extends TableCategory {
 		}
 
 		String[] options = categories.toArray(new String[categories.size()]);
-		logger.info("Set options for categoryMenu:" + options.toString());
+		logger.info("Set options for categoryMenu:" + String.join(", ", options));
 		getCategoryMenu().setOptions(options);
 	}
 
