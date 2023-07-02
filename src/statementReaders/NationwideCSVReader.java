@@ -64,7 +64,7 @@ public class NationwideCSVReader extends StatementReader {
 			}
 			while ((line = reader.readLine()) != null) {
 				String[] fields = line.split("\",\""); // Array of current entry (line currently on in reader)
-				Transaction transaction = singleNationwideTransactionProcess(fields, tableReader, tableWriter, regex);
+				Transaction transaction = processNationwideTransaction(fields, tableReader, tableWriter, regex);
 				transactions.add(transaction);
 			}
 			numTransactions = transactions.size();
@@ -73,62 +73,32 @@ public class NationwideCSVReader extends StatementReader {
 		} catch (IOException e) {
 			logger.error("Error when converting expected CSV statement to an array of transactions:" + e.getMessage());
 		}
-		return null;
+		return transactions.toArray(new Transaction[0]);
 	}
 
 	// Formats a transaction properly, and adds its corresponding category to the
 	// categoryTable
-	public Transaction singleNationwideTransactionProcess(String[] fields, TableCategoryReader tableReader,
-			TableCategoryWriter tableWriter, RegexMethods regex) {
-		// Creating empty transaction which we will add the data from fields into.
-		Transaction transaction = new Transaction();
-		// Set date of transaction, converting from expected DDMMMYYYY format to
-		// DD-MM-YYYY
-		String date = fields[0];
-		String convertedDate = regex.convertDDMMYYYYDate(date);
-		transaction.setDate(regex.convertDDMMYYYYDate(convertedDate));
+    public Transaction processNationwideTransaction(String[] fields, TableCategoryReader tableReader,
+            TableCategoryWriter tableWriter, RegexMethods regex) {
+        Transaction transaction = createEmptyTransaction();
 
-		// Set transaction type of transaction
-		String trType = fields[1];
-		transaction.setTrType(trType);
+        transaction.setDate(regex.convertDDMMYYYYDate(fields[0]));
+        transaction.setTrType(fields[1]);
+        transaction.setRawDescription(fields[2]);
+        transaction.setProcessedDescription(regex.processDescription(fields[2]));
+        transaction.setPaidOut(regex.parseAmount(fields[3]));
+        transaction.setPaidIn(regex.parseAmount(fields[4]));
+        transaction.setBalance(regex.parseAmount(fields[5]));
+        transaction.setID(regex.generateTransactionUUID(transaction.getDate(), transaction.getTrType(),
+                transaction.getRawDescription(), transaction.getPaidOut(), transaction.getPaidIn(),
+                transaction.getBalance()));
+        transaction.setCategory(retrieveCategory(transaction, tableReader, tableWriter));
+        
+        tableWriter.insertEntry(transaction.getProcessedDescription(), transaction.getCategory());
+        return transaction;
+    }
 
-		// Set raw description of transaction
-		String rawDescription = fields[2];
-		transaction.setRawDescription(rawDescription);
-
-		// Set processed description of transaction
-		String processedDescription = regex.processDescription(rawDescription);
-		transaction.setProcessedDescription(processedDescription);
-
-		// Set paidOut value of transaction
-		String paidOut = fields[3];
-		String paidOutNoQuotations = regex.removeQuotationMarks(paidOut);
-		Double paidOutDouble = regex.convertPrice(paidOutNoQuotations);
-		transaction.setPaidOut(paidOutDouble);
-
-		// Set paidIn value of transaction
-		String paidIn = fields[4];
-		String paidInNoQuotations = regex.removeQuotationMarks(paidIn);
-		Double paidInDouble = regex.convertPrice(paidInNoQuotations);
-		transaction.setPaidIn(paidInDouble);
-
-		// Set balance value of transaction
-		String balance = fields[5];
-		String balanceNoQuotations = regex.removeQuotationMarks(balance);
-		Double balanceDouble = regex.convertPrice(balanceNoQuotations);
-		transaction.setBalance(balanceDouble);
-
-		// Set uuID
-		String uuid = regex.generateTransactionUUID(convertedDate, trType, rawDescription, paidOutDouble, paidInDouble,
-				balanceDouble);
-		transaction.setID(uuid);
-
-		// Set category
-		String assignedCategory = retrieveCategory(transaction, tableReader, tableWriter);
-		transaction.setCategory(assignedCategory);
-
-		return transaction;
-	}
+ 
 
 	// Checks whether transaction already has an appropriate category within the
 	// tableReader, if it doesn't assign a new one.
@@ -148,5 +118,8 @@ public class NationwideCSVReader extends StatementReader {
 
 		return readCategory;
 	}
-
+	
+	public Transaction createEmptyTransaction() {
+		return new Transaction();
+	}
 }

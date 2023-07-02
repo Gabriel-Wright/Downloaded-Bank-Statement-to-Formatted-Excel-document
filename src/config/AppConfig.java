@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import javax.swing.JFileChooser;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -118,5 +120,11 @@ public class AppConfig {
 			return null;
 		}
 	}
+	
+	//Implemented so that we can better test
+	public JFileChooser createFileChooser() {
+		return new JFileChooser();
+	}
+
 
 }

@@ -85,6 +85,11 @@ public class RegexMethods {
 		return amount;
 	}
 
+    public double parseAmount(String amount) {
+        String amountNoQuotations = removeQuotationMarks(amount);
+        return convertPrice(amountNoQuotations);
+    }
+
 	// Formats DDMMMYYYYDate into yyyy-MM-dd, e.g. 03 Jan 2000 becomes 2000-01-03
 	public String convertDDMMYYYYDate(String date) {
 		String removeQuo = removeQuotationMarks(date);

@@ -14,24 +14,11 @@ import config.AppConfig;
 	private AppConfig config;
 	private File CONFIG_FILE;
 	private File statementFolder;
-	
-	//this this statementFile can be changed -- depending on what is to be imported.
 	private File statement;	
 
-	
 	protected static final Logger logger = LogManager.getLogger(StatementReader.class.getName());
 
-	
-//	/*
-//	 * ===================CONSTRUCTORS ====================
-//	 */
-//	
-//	//assigns CONFIG_FILE & statementFolder Files to statementReader object
-//	public StatementReader(AppConfig config){
-//		this.config = config;
-//		this.CONFIG_FILE=config.getConfigFile();
-//	}
-	
+		
 	/*
 	 * ================== GETTERS =================
 	 */
@@ -68,18 +55,20 @@ import config.AppConfig;
 	 * ================== METHODS =================
 	 */
 	
-	public void loadStatementFolder() {
+	public boolean loadStatementFolder() {
 		//Attempt to load statementFolder, if setting exists. If it doesn't then flair and log.
 		try {
 			this.statementFolder = new File(config.checkSetting("statementFolder")); 
 			logger.info("Setting found: statementFolder.");
+			return true;
 		} catch (NullPointerException e) {
 			logger.error("Unable to find setting statementFolder");
+			return false;
 		}
 	}
 	
-	public void selectStatement() {
-		JFileChooser fileChooser = new JFileChooser();
+	public boolean selectStatement() {
+		JFileChooser fileChooser = createFileChooser();
         fileChooser.setDialogTitle("Select statements to import");
         // Set the current directory for the file chooser 
         // here it is set to the current working directory. 
@@ -93,8 +82,15 @@ import config.AppConfig;
             logger.info("Selected file: " + selectedFolder.getAbsolutePath());
             // Do something with the selected file
             this.statement=selectedFolder;
+            return true;
         } else {
             logger.info("No file selected.");
+            return false;
         }
+	}
+	
+	//Implemented so that we can better test
+	public JFileChooser createFileChooser() {
+		return new JFileChooser();
 	}
 }

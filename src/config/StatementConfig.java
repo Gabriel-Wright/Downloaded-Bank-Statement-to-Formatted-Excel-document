@@ -12,7 +12,8 @@ import org.apache.logging.log4j.Logger;
 import javax.swing.JFileChooser;
 
 public class StatementConfig {
-
+	
+	private AppConfig config;
 	private File CONFIG_FILE;
 	private File statementFolder;
 	private Logger logger;
@@ -21,6 +22,7 @@ public class StatementConfig {
 	 */
 
 	public StatementConfig(AppConfig config) {
+		this.config	= config;
 		this.CONFIG_FILE = config.getConfigFile();
 		this.logger = config.getLogger();
 	}
@@ -29,6 +31,10 @@ public class StatementConfig {
 	 * ================== GETTERS =================
 	 */
 
+	public AppConfig getConfig() {
+		return config;
+	}
+	
 	public File getCONFIG_FILE() {
 		return CONFIG_FILE;
 	}
@@ -43,7 +49,7 @@ public class StatementConfig {
 
 	//Set folder where Statements are saved.
 	public boolean setStatementFolder() {
-		JFileChooser fileChooser = new JFileChooser();
+		JFileChooser fileChooser = config.createFileChooser();
 		fileChooser.setDialogTitle("Select statements folder");
 		// Set the current directory for the file chooser
 		// here it is set to the current working directory.

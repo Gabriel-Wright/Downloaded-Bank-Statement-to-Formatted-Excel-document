@@ -1,5 +1,7 @@
 package transactions;
 
+import java.util.Objects;
+
 public class Transaction {
 
 	// variables
@@ -86,6 +88,30 @@ public class Transaction {
 		this.balance = balance;
 	}
 
+	
+	/* 
+	 * ======================= METHODS ==============
+	 */
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) {
+	        return true;
+	    }
+	    if (obj == null || getClass() != obj.getClass()) {
+	        return false;
+	    }
+	    Transaction other = (Transaction) obj;
+	    return Objects.equals(this.iD, other.iD);
+	}
+
+	@Override
+	public int hashCode() {
+	    return Objects.hash(iD);
+	}
+
+
 }
+
 
 
