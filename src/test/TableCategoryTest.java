@@ -29,14 +29,14 @@ import org.mockito.MockedStatic;
 class TableCategoryTest {
 
 	private Database mockDB;
-	private Input mockInput;
+	private Menu mockMenu;
 	private static MockedStatic<DriverManager> mockedDriverManager;
 
 	@BeforeEach
 	public void setup() {
 		// Create mock objects for Database and Input
 		mockDB = mock(Database.class);
-		mockInput = mock(Input.class);
+		mockMenu = mock(Menu.class);
 	}
 
 	@BeforeAll
@@ -54,7 +54,7 @@ class TableCategoryTest {
 	@Test
 	public void testTableCategoryCreateTable() {
 		// Create a TableCategory instance with the mock objects
-		TableCategory tableCategory = new TableCategory(mockDB);
+		TableCategory tableCategory = new TableCategory(mockDB, mockMenu);
 
 		// Mock the Connection and Statement objects
 		Connection mockConnection = mock(Connection.class);
@@ -89,14 +89,15 @@ class TableCategoryTest {
 
 		// Mock TableCategory
 		TableCategory mockTableCategory = mock(TableCategory.class);
-
+		MenuSelect categoryMenuSelect = new MenuSelect(mockMenu);
 		// Stub tableCategory.getDB()
 		when(mockTableCategory.getDB()).thenReturn(mockDB);
 
 		// Stub tableCategory.getTableName()
 		when(mockTableCategory.getTableName()).thenReturn("Category");
 
-		TableCategoryWriter tableCategoryWriter = new TableCategoryWriter(mockTableCategory);
+		TableCategoryWriter tableCategoryWriter = new TableCategoryWriter(mockTableCategory, categoryMenuSelect, false,
+				false, false);
 
 		// Mock the DB, Connection and Statement objects
 		Connection mockConnection = mock(Connection.class);
@@ -137,8 +138,7 @@ class TableCategoryTest {
 		// Stub tableCategory.getTableName()
 		when(mockTableCategory.getTableName()).thenReturn("Category");
 
-		TableCategoryReader tableCategoryReader = new TableCategoryReader(mockTableCategory, mockCategoryInput, false,
-				false, false);
+		TableCategoryReader tableCategoryReader = new TableCategoryReader(mockTableCategory);
 		tableCategoryReader.setCategoryMenu(mockCategoryMenu);
 		// Mock the Connection, Statement and ResultSet objects
 		Connection mockConnection = mock(Connection.class);
@@ -191,14 +191,13 @@ class TableCategoryTest {
 		Menu mockCategoryMenu = mock(Menu.class);
 
 		// Create a test instance of TableCategoryReader
-		
+
 		// Stub tableCategory.getDB()
 		when(mockTableCategory.getDB()).thenReturn(mockDB);
 
-		TableCategoryReader tableCategoryReader = new TableCategoryReader(mockTableCategory, mockCategoryInput, false,
-				false, false);
+		TableCategoryReader tableCategoryReader = new TableCategoryReader(mockTableCategory);
 		tableCategoryReader.setCategoryMenu(mockCategoryMenu);
-		
+
 		Connection mockConnection = mock(Connection.class);
 		Statement mockStatement = mock(Statement.class);
 		ResultSet mockResultSet = mock(ResultSet.class);
@@ -237,60 +236,58 @@ class TableCategoryTest {
 
 			// Assert that the method returns false
 			Assertions.assertFalse(result2);
-	
-		} catch(SQLException e) {
+
+		} catch (SQLException e) {
 			fail("Exception occurred: " + e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void testTableCategoryReaderReadCategory() {
-		String description="TestDescription";
+		String description = "TestDescription";
 		String category = "TestCategory";
 		// Mock dependencies
 		TableCategory mockTableCategory = mock(TableCategory.class);
 		Input mockCategoryInput = mock(Input.class);
-		Menu mockCategoryMenu = mock(Menu.class);
-		
+
 		// Stub tableCategory.getDB()
 		when(mockTableCategory.getDB()).thenReturn(mockDB);
-		//Stub mockDB.getUrl()
+		// Stub mockDB.getUrl()
 		when(mockDB.getUrl()).thenReturn("jdbc:mock");
-		
-		//Creating mocks of connection
+
+		// Creating mocks of connection
 		Connection mockConnection = mock(Connection.class);
 		PreparedStatement mockStatement = mock(PreparedStatement.class);
 		ResultSet mockResultSet = mock(ResultSet.class);
-		
-		TableCategoryReader tableCategoryReader = new TableCategoryReader(mockTableCategory, mockCategoryInput, false,
-				false, false);
-		tableCategoryReader.setCategoryMenu(mockCategoryMenu);
-		
+
+		TableCategoryReader tableCategoryReader = new TableCategoryReader(mockTableCategory);
+		tableCategoryReader.setCategoryMenu(mockMenu);
+
 		try {
 			// Stub driverManager.getConnection() method to return a mock connection
 			when(DriverManager.getConnection(anyString())).thenReturn(mockConnection);
-			
-			//Stub mockConnection.prepareStatement()
+
+			// Stub mockConnection.prepareStatement()
 			when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
-			
+
 			// Stub the Statement.executeQuery() method to return the mockResultSet.
 			when(mockStatement.executeQuery()).thenReturn(mockResultSet);
-			
-		    // Stub the PreparedStatement.setString() method
-		    doNothing().when(mockStatement).setString(1, description);
+
+			// Stub the PreparedStatement.setString() method
+			doNothing().when(mockStatement).setString(1, description);
 
 			// Stub resultSet.next() method to return true true and then false (for no more
 			// results)
 			when(mockResultSet.next()).thenReturn(true); // Simulate two results
-			
-		    // Stub the ResultSet.getString() method
-		    when(mockResultSet.getString("Category")).thenReturn(category);
 
-		    // Call the method under test
-		    String result = tableCategoryReader.readCategory(description);
-		    
-		    Assertions.assertEquals(category, result);
-		} catch(SQLException e) {
+			// Stub the ResultSet.getString() method
+			when(mockResultSet.getString("Category")).thenReturn(category);
+
+			// Call the method under test
+			String result = tableCategoryReader.readCategory(description);
+
+			Assertions.assertEquals(category, result);
+		} catch (SQLException e) {
 			fail("Exception occurred: " + e.getMessage());
 		}
 	}

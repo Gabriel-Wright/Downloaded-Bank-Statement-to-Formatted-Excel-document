@@ -2,6 +2,7 @@ package statementReaders;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class NationwideCSVReader extends StatementReader {
 			TableCategoryWriter tableWriter, RegexMethods regex) {
 
 		List<Transaction> transactions = new ArrayList<>();
-		try (BufferedReader reader = new BufferedReader(new FileReader(statement.getAbsolutePath()))) {
+		try (BufferedReader reader = createNewBufferedReader(statement)) {
 			// Stores the values of the entries on current line of CSV
 			String line;
 			int numTransactions;
@@ -119,6 +120,16 @@ public class NationwideCSVReader extends StatementReader {
 		return readCategory;
 	}
 	
+	public BufferedReader createNewBufferedReader(File statement) {
+		try (BufferedReader reader = new BufferedReader(new FileReader(statement.getAbsolutePath()))) {
+			return reader;
+		} catch (FileNotFoundException e) {
+			logger.error("File not found when creating new BufferedReader:"+e.getMessage());
+		} catch (IOException e) {
+			logger.error("IOException when creating new BufferedReader:"+e.getMessage());
+		}
+		return null;
+	}
 	public Transaction createEmptyTransaction() {
 		return new Transaction();
 	}

@@ -94,6 +94,22 @@ public class Transaction {
 	 */
 	
 	@Override
+	public String toString() {
+	    return "Transaction{" +
+	            "iD='" + iD + '\'' +
+	            ", date='" + date + '\'' +
+	            ", trType='" + trType + '\'' +
+	            ", rawDescription='" + rawDescription + '\'' +
+	            ", processedDescription='" + processedDescription + '\'' +
+	            ", category='" + category + '\'' +
+	            ", paidIn=" + paidIn +
+	            ", paidOut=" + paidOut +
+	            ", balance=" + balance +
+	            '}';
+	}
+	
+	
+	@Override
 	public boolean equals(Object obj) {
 	    if (this == obj) {
 	        return true;
@@ -102,12 +118,20 @@ public class Transaction {
 	        return false;
 	    }
 	    Transaction other = (Transaction) obj;
-	    return Objects.equals(this.iD, other.iD);
+	    return Objects.equals(this.iD, other.iD) &&
+	           Objects.equals(this.date, other.date) &&
+	           Objects.equals(this.trType, other.trType) &&
+	           Objects.equals(this.rawDescription, other.rawDescription) &&
+	           Objects.equals(this.processedDescription, other.processedDescription) &&
+	           Objects.equals(this.category, other.category) &&
+	           Double.compare(this.paidIn, other.paidIn) == 0 &&
+	           Double.compare(this.paidOut, other.paidOut) == 0 &&
+	           Double.compare(this.balance, other.balance) == 0;
 	}
 
 	@Override
 	public int hashCode() {
-	    return Objects.hash(iD);
+	    return Objects.hash(iD, date, trType, rawDescription, processedDescription, category, paidIn, paidOut, balance);
 	}
 
 
