@@ -94,10 +94,10 @@ public class StatementConfig {
 			properties.store(outputStream, null);
 			outputStream.close();
 			
-			System.out.println("Properties updated");
+			logger.info("statementFolder setting updated:"+statementFolder.getAbsolutePath());
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("Failed to update setting statementFolder: "+e.getMessage());
 		}
 	}
 
