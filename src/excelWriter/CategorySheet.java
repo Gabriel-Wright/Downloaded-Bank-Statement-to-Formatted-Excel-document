@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import config.AppConfig;
+import config.ColorConfig;
 
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellReference;
@@ -20,14 +21,15 @@ public class CategorySheet extends StatementSheet{
 	private Map<Integer, CellReference> monthPaidOutSumMap;
 	private int rowStartNum;
 	private int colStartNum;
-
+	
 
 	/*
 	 * ==================CONSTUCTORS==============
 	 */
 
-	public CategorySheet(Workbook workbook, String categoryName, int rowStartNum, int colStartNum) {
+	public CategorySheet(Workbook workbook, ColorConfig colConfig, String categoryName, int rowStartNum, int colStartNum) {
 		setWorkbook(workbook);
+		setColConfig(colConfig);
 		this.categoryName=categoryName;
 		setSheet(workbook.createSheet(categoryName));
 		this.rowStartNum=rowStartNum;

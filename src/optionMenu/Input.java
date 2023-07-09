@@ -1,6 +1,10 @@
 package optionMenu;
 
+import java.awt.Color;
 import java.util.Scanner;
+
+import javax.swing.JColorChooser;
+import javax.swing.JFrame;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -127,6 +131,15 @@ public class Input {
 		return stringInput;
 	}
 
+	public Color chooseColor(String prompt, Color displayedColor) {
+		// Create a new JFrame as parent component
+		JFrame frame = new JFrame();
 
+		// Show color chooser dialogue and get the selected color
+		Color color = JColorChooser.showDialog(frame, prompt,
+				displayedColor);
+		// Return selected color
+		return color;
+	}
 
 }

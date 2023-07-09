@@ -7,7 +7,8 @@ import org.apache.poi.ss.util.CellReference;
 import transactions.Transaction;
 
 public class CategorySheetInboundWriter extends CategorySheetWriter {
-
+	
+	
 	/*
 	 * ==============CONSTRUCTORS=================
 	 */
@@ -50,6 +51,7 @@ public class CategorySheetInboundWriter extends CategorySheetWriter {
 		for (int col = 0; col < numColumns; col++) {
 			Cell headerCell = createOrGetCell(headerRow, startColumn + col);
 			headerCell.setCellValue(headers[col]);
+			getCategorySheet().loadCellHeaderStyle(getCategorySheet().getCategoryName());
 			headerCell.setCellStyle(getCategorySheet().getHeaderStyle());
 		}
 
