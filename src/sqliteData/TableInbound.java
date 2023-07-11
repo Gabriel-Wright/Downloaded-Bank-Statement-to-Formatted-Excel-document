@@ -8,10 +8,24 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * The TableInbound class represents an inbound table in a SQLite database. It
+ * extends the abstract Table class and provides functionality specific to the
+ * Inbound table. The Inbound table stores information related to inbound
+ * transactions.
+ *
+ * @author LORD GABRIEL
+ */
 public class TableInbound extends Table {
 
 	/*
 	 * ============= CONSTRUCTORS ================
+	 */
+
+	/**
+	 * Constructs a new TableInbound object with the specified Database.
+	 *
+	 * @param DB - the Database object associated with the table
 	 */
 
 	public TableInbound(Database DB) {
@@ -23,8 +37,12 @@ public class TableInbound extends Table {
 	/*
 	 * =========== ABSTRACT IMPLEMENTATION ============
 	 */
+	/**
+	 * Creates the Inbound table in the database. The table will be created only if
+	 * it does not already exist. The table schema includes columns for ID, Date,
+	 * trType, RawDescription, ProcessDescription, Category, Paid_In, and Balance.
+	 */
 
-	// create a new Inbound Table. Will not update if already exists.
 	public void createTable() {
 		String addTable = "CREATE TABLE IF NOT EXISTS " + getTableName() + " (\n" + "ID text PRIMARY KEY, \n"
 				+ "Date text NOT NULL, \n" + "trType text, \n" + "RawDescription text NOT NULL, \n"
@@ -33,9 +51,11 @@ public class TableInbound extends Table {
 
 		try (Connection conn = DriverManager.getConnection(getDB().getUrl()); Statement stmt = conn.createStatement()) {
 			stmt.execute(addTable);
-			logger.info("Created Table:" + getTableName());
+			String log = String.format("Created Table: %s", getTableName());
+			logger.info(log);
 		} catch (SQLException e) {
-			logger.error("Failed to create table:" + getTableName() + "," + e.getMessage());
+			String log = String.format("Failed to create table: %s. %s", getTableName(), e.getMessage());
+			logger.error(log);
 		}
 	}
 
@@ -43,6 +63,12 @@ public class TableInbound extends Table {
 	 * ================== METHODS =================
 	 */
 	
+    /**
+     * Returns a list of column headers for the Inbound table.
+     *
+     * @return Column headers to be found within Inbound table in .db file.
+     */
+
 	public List<String> inboundHeaders() {
 		List<String> head = new ArrayList<>();
 		head.add("ID");

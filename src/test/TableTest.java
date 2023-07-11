@@ -16,7 +16,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class TableTest {
-
+	
+	//Table tests Table abstract class, TableInbound class and TableOutbound class.
+	
 	private static Database DB;
 	private static TableInbound tI;
 	private static TableOutbound tO; 
