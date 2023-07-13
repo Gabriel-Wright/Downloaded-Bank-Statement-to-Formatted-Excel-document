@@ -12,10 +12,38 @@ import java.util.List;
 import optionMenu.Input;
 import optionMenu.Menu;
 
+/**
+ * The TableCategoryReader class extends the TableCategory class and provides
+ * additional functionality to read and retrieve category information from the
+ * Category table of an SQLite database. It includes methods to check whether a
+ * category exists, as well as retrieve the category associated with a specific
+ * description. It relies on the TableCategory class for database connection and
+ * menu options.
+ * 
+ * The TableCategoryReader class is designed to be used in conjunction with the
+ * TableCategory class to provide comprehensive category reading and retrieval
+ * functionality.
+ * 
+ * Note: The TableCategoryReader class assumes that the necessary tables and
+ * connections have been set up prior to use.
+ * 
+ * @see Table
+ * @see TableCategory
+ * @see optionMenu.Menu
+ * @author LORD GABRIEL
+ */
+
 public class TableCategoryReader extends TableCategory {
 
 	/*
 	 * ===================CONSTRUCTORS ====================
+	 */
+	
+	/**
+	 * Constructs a new TableCategoryReader object with the specified TableCategory
+	 * object.
+	 *
+	 * @param tC - the TableCategory object associated with the reader
 	 */
 
 	public TableCategoryReader(TableCategory tC) {
@@ -28,21 +56,34 @@ public class TableCategoryReader extends TableCategory {
 	 */
 
 
-	// Checks whether Category exists within categoryTable
+	/**
+	 * Checks whether a category exists within the category options.
+	 *
+	 * @param category - the category to check
+	 * @return true if the category exists, false otherwise
+	 */
 	public boolean checkCategoryOption(String category) {
 		refreshCategoryOptions();
 		String[] options = getCategoryMenu().getOptions();
 		for (String optionCategory : options) {
 			if (optionCategory.equals(category)) {
-				logger.info("Category:"+category+" was found within categoryMenu options");
+				String log = String.format("Category:{} was found within categoryMenu options",category);
+				logger.info(log);
 				return true;
 			}
 		}		
-		logger.info("Category:"+category+" was not found within categoryMenu options");
+		String log = String.format("Category:{} was not found within categoryMenu options",category);
+		logger.info(log);
 		return false;
 	}
 	
-	//retrieves category from primary key (Description)
+	/**
+	 * Retrieves the category associated with the specified description.
+	 *
+	 * @param description - the description to retrieve the category for
+	 * @return the category associated with the description, or null if no category
+	 *         is found
+	 */
 	public String readCategory(String description) {
 		String category = null;
 		String query = "SELECT Category from Category WHERE Description = ?;";
@@ -57,12 +98,13 @@ public class TableCategoryReader extends TableCategory {
 			//retrieve category String.
 				if (rs.next()) {
 					category = rs.getString("Category");
-					logger.info("Category:"+category+" found for description:"+description);
-
+					String log = String.format("Category:{} found for description {}", category,description);
+					logger.info(log);
 				}
 			}
 		} catch (SQLException e) {
-			logger.error("Error found when trying to locate category for description:"+description);
+			String log = String.format("Error found when trying to locate category for description:{}",description);
+			logger.error(log);
 		}
 		return category;
 	}

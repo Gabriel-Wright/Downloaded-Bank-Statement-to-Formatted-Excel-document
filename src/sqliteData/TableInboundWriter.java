@@ -7,19 +7,41 @@ import java.sql.Statement;
 
 import transactions.Transaction;
 
+/**
+ * 
+ * The TableInboundWriter class is responsible for importing transactions into
+ * the inbound table of the SQLite database. It extends the TableInbound class
+ * and provides a method to import an array of transactions into the table.
+ * 
+ * @see TableInbound
+ * @see transactions.Transaction
+ * @author
+ */
+
 public class TableInboundWriter extends TableInbound {
 
 	/*
 	 * =========================== CONSTRUCTORS ===========================
 	 */
 
-	// Pass TableInbound object to createWriter
+	/**
+	 * Constructs a TableInboundWriter object with the specified TableInbound object.
+	 * 
+	 * @param table - the TableInbound object to set
+	 */
+	
 	public TableInboundWriter(TableInbound table) {
 		super(table.getDB());
 	}
 
 	/*
 	 * =========================== METHODS ===========================
+	 */
+	
+	/**
+	 * Imports an array of transactions into the inbound table of the database.
+	 * 
+	 * @param transactions - the array of transactions to import
 	 */
 
 	public void importData(Transaction[] transactions) {
@@ -40,9 +62,9 @@ public class TableInboundWriter extends TableInbound {
 					stmt.execute(insert);
 				}
 			}
-			logger.info("Imported " + numImports + "transactions into" + getTableName());
+			logger.info(String.format("Imported {} transactions into {}", numImports, getTableName()));
 		} catch (SQLException e) {
-			logger.error("Failed to import transactions into" + getTableName() + "table," + e.getMessage());
+			logger.error(String.format("Failed to import transactions into {} table. {}", getTableName(), e.getMessage()));
 		}
 
 	}

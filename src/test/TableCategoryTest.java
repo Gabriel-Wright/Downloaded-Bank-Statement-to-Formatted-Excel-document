@@ -27,7 +27,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
 class TableCategoryTest {
-
+	
+	//Test for TableCategory, TableCategoryReader and TableCategoryWriter
+	
 	private Database mockDB;
 	private Menu mockMenu;
 	private static MockedStatic<DriverManager> mockedDriverManager;

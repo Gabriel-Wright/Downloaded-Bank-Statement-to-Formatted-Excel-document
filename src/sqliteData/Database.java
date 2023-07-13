@@ -15,11 +15,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Database is the main entity we will be using to contain all connections to
- * physical .db files.
+ * The Database class is used to manage and interact with SQLite database
+ * files.It provides methods to check the existence of a database file, connect
+ * to the database, load the database file, and delete the database file. It
+ * also includes methods to check the existence of tables within the database.
+ * 
+ * * Note: The Database class assumes that the necessary SQLite JDBC driver is
+ * available.
  * 
  * @author LORD GABRIEL
- * 
  */
 public class Database {
 	/**
@@ -27,13 +31,14 @@ public class Database {
 	 */
 	private String dbName;
 	/**
-	 * The filePath of the folder of the saved .db file
+	 * The filePath of the folder where the database file is saved.
+	 * 
 	 */
 	private String filePath;
 	/**
-	 * The URL string used to connect with the DB.
+	 * The URL string used to connect to the database.
 	 */
-	private String url; // combined url for connecting to sqlite3
+	private String url;
 	private static final Logger logger = LogManager.getLogger(Database.class.getName());
 
 	/*
@@ -46,7 +51,7 @@ public class Database {
 	 * database function will be made at default location.
 	 * </p>
 	 * 
-	 * @param dbName - name of the .db file
+	 * @param dbName - name of the database file
 	 */
 	public Database(String dbName) {
 		this.dbName = dbName;
@@ -56,11 +61,11 @@ public class Database {
 
 	/**
 	 * <p>
-	 * Constructor of database class, save location of .db file and .db name.
+	 * Constructor of database class, save location of database file file and name.
 	 * </p>
 	 * 
-	 * @param dbName   - name of the .db file
-	 * @param filePath - location of saved .db file
+	 * @param dbName   - name of the database file
+	 * @param filePath - location of saved database file
 	 */
 	public Database(String dbName, String filePath) {
 		this.dbName = dbName;
@@ -73,10 +78,10 @@ public class Database {
 	 */
 	/**
 	 * <p>
-	 * Getter method to return Database object's .db file name
+	 * Getter method to return Database object's database file name
 	 * </p>
 	 * 
-	 * @return the name of the .db file
+	 * @return the name of the database file
 	 */
 	public String getDbName() {
 		return this.dbName;
@@ -84,10 +89,10 @@ public class Database {
 
 	/**
 	 * <p>
-	 * Getter method to return Database object's .db file path
+	 * Getter method to return Database object's database file path
 	 * </p>
 	 * 
-	 * @return the file path of a .db file
+	 * @return the file path of a database file
 	 */
 	public String getFilePath() {
 		return this.filePath;
@@ -111,11 +116,11 @@ public class Database {
 
 	/**
 	 * <p>
-	 * Check whether a .db file already exists for this Database object
+	 * Check whether a database file already exists for this Database object
 	 * </p>
 	 * 
-	 * @return true / false bool value for whether .db file exists at filePath
-	 *         location
+	 * @return true / false bool value for whether a database file exists at
+	 *         filePath location
 	 */
 	public boolean checkDB() {
 		String path = String.format("%s\\%s.db", filePath, dbName);
@@ -125,8 +130,8 @@ public class Database {
 
 	/**
 	 * <p>
-	 * Connects to .db file of name dbName at filePath location. If no .db file
-	 * exists, one will be created
+	 * Connects to database file of name dbName at filePath location. If no database
+	 * file exists, one will be created
 	 * </p>
 	 */
 	public void loadDB() {
@@ -143,7 +148,7 @@ public class Database {
 
 	/**
 	 * <p>
-	 * Deletes .db file of name dbName at filePath location.
+	 * Deletes database file of name dbName at filePath location.
 	 * </p>
 	 */
 	public void deleteDB() {
@@ -159,12 +164,12 @@ public class Database {
 
 	/**
 	 * <p>
-	 * Checks whether there is a table of name: tableName within the .db file of
+	 * Checks whether there is a table of name: tableName within the  database file of
 	 * dbName at location filePath.
 	 * </p>
 	 * 
-	 * @param tableName - String name of table searched for within .db file
-	 * @return true / false bool value for whether table exists within .db file at
+	 * @param tableName - String name of table searched for within database file
+	 * @return true / false bool value for whether table exists within  database file at
 	 *         filePath location
 	 */
 	public boolean checkTable(String tableName) {

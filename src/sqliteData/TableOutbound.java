@@ -12,7 +12,9 @@ import java.util.List;
  * extends the abstract Table class and provides functionality specific to the
  * outbound table. The Outbound table stores information related to outbound
  * transactions.
- *
+ * 
+ * @see Table
+ * @see Database
  * @author LORD GABRIEL
  */
 

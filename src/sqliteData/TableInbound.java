@@ -14,6 +14,8 @@ import java.util.ArrayList;
  * Inbound table. The Inbound table stores information related to inbound
  * transactions.
  *
+ * @see Table
+ * @see Database
  * @author LORD GABRIEL
  */
 public class TableInbound extends Table {

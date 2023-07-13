@@ -23,6 +23,8 @@ import java.sql.SQLException;
  * 
  * The category table contains columns for Description and Category.
  * 
+ * @see Table
+ * @see Database
  * @author LORD GABRIEL
  */
 

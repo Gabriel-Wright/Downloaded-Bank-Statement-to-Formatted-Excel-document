@@ -7,16 +7,21 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import transactions.Transaction;
 
 /**
  * Table objects represent the tables found within .db files. A DB is passed
  * into a Table, through which all connections to the physical .db files are
  * handled.
  * 
+ * @see Database
  * @author LORD GABRIEL
  *
  */
@@ -121,6 +126,7 @@ public abstract class Table {
 	/*
 	 * =========================== METHODS ===========================
 	 */
+	
 
 	/**
 	 * <p>

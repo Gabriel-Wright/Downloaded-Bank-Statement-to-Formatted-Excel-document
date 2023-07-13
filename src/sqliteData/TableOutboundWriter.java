@@ -7,10 +7,27 @@ import java.sql.Statement;
 
 import transactions.Transaction;
 
+/**
+ * 
+ * The TableOutboundWriter class is responsible for importing transactions into
+ * the outbound table of the SQLite database. It extends the TableOutbound class
+ * and provides a method to import an array of transactions into the table.
+ * 
+ * @see TableOutbound
+ * @see transactions.Transaction
+ * @author
+ */
+
 public class TableOutboundWriter extends TableOutbound {
 
 	/*
 	 * =========================== CONSTRUCTORS ===========================
+	 */
+
+	/**
+	 * Constructs a TableOutboundWriter object with the specified TableOutbound object.
+	 * 
+	 * @param table - the TableOutbound object to set
 	 */
 
 	public TableOutboundWriter(TableOutbound table) {
@@ -19,6 +36,12 @@ public class TableOutboundWriter extends TableOutbound {
 
 	/*
 	 * =========================== METHODS ===========================
+	 */
+
+	/**
+	 * Imports an array of transactions into the outbound table of the database.
+	 * 
+	 * @param transactions - the array of transactions to import
 	 */
 
 	public void importData(Transaction[] transactions) {
@@ -39,9 +62,9 @@ public class TableOutboundWriter extends TableOutbound {
 					stmt.execute(insert);
 				}
 			}
-			logger.info("Imported " + numImports + "transactions into" + getTableName());
+			logger.info(String.format("Imported {} transactions into {}", numImports, getTableName()));
 		} catch (SQLException e) {
-			logger.error("Failed to import transactions into" + getTableName() + "table," + e.getMessage());
+			logger.error(String.format("Failed to import transactions into {} table. {}", getTableName(), e.getMessage()));
 		}
 	}
 
