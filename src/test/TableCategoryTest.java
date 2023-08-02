@@ -1,6 +1,9 @@
 package test;
 
 import sqliteData.*;
+import sqliteData.tables.TableCategory;
+import sqliteData.tables.readers.TableCategoryReader;
+import sqliteData.tables.writers.TableCategoryWriter;
 import optionMenu.*;
 
 import static org.junit.jupiter.api.Assertions.fail;

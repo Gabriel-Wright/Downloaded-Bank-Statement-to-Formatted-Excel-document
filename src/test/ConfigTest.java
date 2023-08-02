@@ -45,7 +45,7 @@ class ConfigTest {
     @Test
     public void testCheckSetting() {
         AppConfig appConfig = new AppConfig();
-        String settingValue = appConfig.checkSetting("example.setting");
+        String settingValue = appConfig.checkProperty("example.setting");
         Assertions.assertNull(settingValue, "Setting value should be null if not found");
     }
 }

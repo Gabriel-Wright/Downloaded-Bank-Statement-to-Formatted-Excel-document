@@ -18,7 +18,7 @@ class InputTest {
         ByteArrayInputStream in = new ByteArrayInputStream("y\n".getBytes());
         input.setScanner(new Scanner(in));
 
-        boolean confirmed = input.confirmInput("Test", input.getScanner());
+        boolean confirmed = input.confirmInput("Test");
         assertTrue(confirmed);
     }
 
@@ -28,7 +28,7 @@ class InputTest {
         ByteArrayInputStream in = new ByteArrayInputStream("n\n".getBytes());
         input.setScanner(new Scanner(in));
 
-        boolean confirmed = input.confirmInput("Test", input.getScanner());
+        boolean confirmed = input.confirmInput("Test");
         assertFalse(confirmed);
     }
 

@@ -33,7 +33,7 @@ public class StatementReaderTest {
 	public void testStatementReaderLoadStatementFolder() {
 		//Stubbing config.getConfigFile method --> not important for this test
 		when(mockConfig.getConfigFile()).thenReturn(null);
-		when(mockConfig.checkSetting(anyString())).thenReturn("//fileTest//");
+		when(mockConfig.checkProperty(anyString())).thenReturn("//fileTest//");
 		NationwideCSVReader reader = new NationwideCSVReader(mockConfig);
 		
 		reader.loadStatementFolder();
@@ -44,7 +44,7 @@ public class StatementReaderTest {
 	@Test
 	public void testStatementReaderLoadStatementFolderNoSetting() {
 		when(mockConfig.getConfigFile()).thenReturn(null);
-		when(mockConfig.checkSetting(anyString())).thenReturn(null);
+		when(mockConfig.checkProperty(anyString())).thenReturn(null);
 		NationwideCSVReader reader = new NationwideCSVReader(mockConfig);
 		Assertions.assertFalse(reader.loadStatementFolder());
 	}

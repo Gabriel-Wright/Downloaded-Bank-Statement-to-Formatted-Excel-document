@@ -1,6 +1,8 @@
 package test;
 
 import sqliteData.*;
+import sqliteData.tables.TableInbound;
+import sqliteData.tables.TableOutbound;
 
 import static org.junit.jupiter.api.Assertions.*;
 

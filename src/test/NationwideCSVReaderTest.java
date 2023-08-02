@@ -10,8 +10,8 @@ import static org.mockito.Mockito.doNothing;
 import org.junit.Before;
 
 import statementReaders.*;
-import sqliteData.TableCategoryReader;
-import sqliteData.TableCategoryWriter;
+import sqliteData.tables.readers.TableCategoryReader;
+import sqliteData.tables.writers.TableCategoryWriter;
 import transactions.Transaction;
 import regex.RegexMethods;
 
