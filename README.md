@@ -25,7 +25,7 @@ Either clone the repo and build using Maven:
 'mvn clean package' and find the jar in the target folder.
 'mvn test' run all unit tests
 
-OR download zip (still to be attached of .jar file, this includes the help guide)
+OR download latest release and run .jar executable, will have guide file attached in correct location
 
 
 
