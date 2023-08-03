@@ -3,5 +3,12 @@
 /DB/
 /fileTest/
 /logs/
+/logs/*.logs/
+/*.logs/
+/outputs/
+/.settings/
+/statements/
+/target/
+/config/
 .classpath
 .project
