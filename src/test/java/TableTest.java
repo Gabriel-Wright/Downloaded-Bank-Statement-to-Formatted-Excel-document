@@ -27,6 +27,20 @@ class TableTest {
 	
 	@BeforeAll
 	static void setup() {
+		File folder = new File(testFilePath);
+		
+		if(!folder.exists()) {
+            // If the folder does not exist, create it
+            boolean folderCreated = folder.mkdirs();
+            if (folderCreated) {
+                System.out.println("Folder created successfully.");
+            } else {
+                System.out.println("Failed to create the folder.");
+            }
+        } else {
+            System.out.println("Folder already exists.");
+        }
+		
 		undoTest();
 		DB = new Database(dbName,testFilePath);
 		tI = new TableInbound(DB);
