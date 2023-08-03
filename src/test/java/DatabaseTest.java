@@ -24,7 +24,23 @@ class DatabaseTest {
 	
 	@BeforeAll
 	static void cleanseTests() {
+		//Check folder exists
+		File folder = new File(testFilePath);
+		
+		if(!folder.exists()) {
+            // If the folder does not exist, create it
+            boolean folderCreated = folder.mkdirs();
+            if (folderCreated) {
+                System.out.println("Folder created successfully.");
+            } else {
+                System.out.println("Failed to create the folder.");
+            }
+        } else {
+            System.out.println("Folder already exists.");
+        }
+
 		//delete previous Test DBs.
+		
 		undoTest("CheckLoadDB");
 		undoTest("DeleteDB");
 	}
