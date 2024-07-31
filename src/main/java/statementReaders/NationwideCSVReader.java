@@ -183,6 +183,7 @@ public class NationwideCSVReader extends StatementReader {
 			} else {
 				inOrOut = "Outgoing";
 			}
+			//THIS IS WHERE TO MAKE CHANGES
 			readCategory = tableWriter.assignCategoryToTransaction(transaction.getProcessedDescription(), inOrOut);
 		}
 
