@@ -151,9 +151,15 @@ public class TableCategoryWriter extends TableCategory {
 	 *                    or outgoing
 	 * @return the user-inputted category name
 	 */
-	public String createNewCategory(String description, String inOrOut) {
-		String prompt = String.format("Please enter a category name for the %s transaction, described as: %s", inOrOut,
-				description);
+	public String createNewCategory(String date, String description, double cost, String inOrOut) {
+		String prompt;
+		if(inOrOut == "Inbound") {
+			prompt = String.format("Please enter a category name for the %s transaction, described as: %s of value £%s on Date %s", inOrOut,
+					description, cost, date);
+		} else {
+			prompt = String.format("Please enter a category name for the %s transaction, described as: %s of cost £%s on Date %s", inOrOut,
+					description, cost, date);
+		}
 		Menu categoryMenu = getCategoryMenu();
 		return categoryMenu.getInput().inputOriginalString(prompt, getCategoryNameConfirm());
 	}
@@ -167,14 +173,14 @@ public class TableCategoryWriter extends TableCategory {
 	 *                    or outgoing
 	 * @return the selected category name
 	 */
-	public String assignCategoryToTransaction(String description, String inOrOut) {
+	public String assignCategoryToTransaction(String date, String description, double cost, String inOrOut) {
 		refreshCategoryOptions();
 
 		if (getCategoryMenu().getOptions().length == 0) {
 			// If no categories have been assigned yet, forced to create a first category.
-			return createNewCategory(description, inOrOut);
+			return createNewCategory(date, description, cost, inOrOut);
 		} else {
-			return chooseExistingOrCreateNewCategory(description, inOrOut);
+			return chooseExistingOrCreateNewCategory(date, description, cost, inOrOut);
 		}
 	}
 
@@ -187,11 +193,18 @@ public class TableCategoryWriter extends TableCategory {
 	 *                    or outgoing
 	 * @return the selected category name
 	 */
-	public String chooseExistingOrCreateNewCategory(String description, String inOrOut) {
+	public String chooseExistingOrCreateNewCategory(String date, String description, double costOrPrice, String inOrOut) {
 		// Printing out existing category options to assign description to.
-		String introPrompt = String.format(
-				"Please input an appropriate category for the following %s transaction described as: %s", inOrOut,
-				description);
+		String introPrompt;
+		if(inOrOut == "Inbound") {
+			introPrompt = String.format(
+					"Please input an appropriate category for the following %s transaction described as: %s with value £%s on Date %s", inOrOut,
+					description, costOrPrice, date);
+		} else {
+			introPrompt = String.format(
+					"Please input an appropriate category for the following %s transaction described as: %s with cost £%s on Date %s", inOrOut,
+					description, costOrPrice, date);
+		}
 		System.out.println(introPrompt);
 		System.out.println("Either append this item to an already existing category or create a new one");
 		getCategoryMenu().printOptions();
@@ -206,7 +219,7 @@ public class TableCategoryWriter extends TableCategory {
 		if (appendOrCreateMenu.getChoice().equalsIgnoreCase("Append")) {
 			return chooseCategoryFromMenu(description);
 		} else if (appendOrCreateMenu.getChoice().equalsIgnoreCase("Create")) {
-			return createNewCategory(description, inOrOut);
+			return createNewCategory(date, description, costOrPrice, inOrOut);
 		}
 
 		return null;

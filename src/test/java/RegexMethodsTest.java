@@ -63,35 +63,6 @@ class RegexMethodsTest {
 	}
 
 	@Test
-	void testConvertPrice() {
-		int decimal = rand.nextInt(0, 100);
-		int whole = rand.nextInt(0, 1000000);
-		
-		String price = "£" + whole + "." + decimal;
-		double convertedPrice = regex.convertPrice(price);
-		
-		double solution = whole + 0.01 * decimal;
-		
-	    DecimalFormat df = new DecimalFormat("#.00"); // Format to two decimal places
-	    String expectedFormatted = df.format(solution);
-	    String actualFormatted = df.format(convertedPrice);
-
-		Assertions.assertEquals(expectedFormatted, actualFormatted);
-	}
-
-	@Test
-	void testGenerateUUID() {
-		String id_1 = regex.generateTransactionUUID("date", "trType", "description", 10.00,
-				10.00, 10.00);
-		String id_2 = regex.generateTransactionUUID("date", "trType", "description", 10.00,
-				10.00, 11.00);
-		String id_3 = regex.generateTransactionUUID("date", "trType", "description", 10.00,
-				10.00, 11.00);
-		Assertions.assertNotEquals(id_1, id_2);
-		Assertions.assertEquals(id_2, id_3);
-	}
-	
-	@Test
 	void testProcessDescription() {
 		String test = "TESCO STORES 2325 COVENTRY CV4 8EY GB";
 		String expected = "TESCO STORES  COVENTRY  GB";

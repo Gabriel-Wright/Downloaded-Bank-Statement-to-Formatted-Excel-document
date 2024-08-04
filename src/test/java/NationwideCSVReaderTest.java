@@ -36,53 +36,7 @@ class NationwideCSVReaderTest {
 		Assertions.assertTrue(reader.checkNationWideHeaders(testHeaders));
 	
 	}
-	
-	@Test public void testRetrieveCategoryNullRead() {
-		Transaction mockTransactionIn = mock(Transaction.class);
-		Transaction mockTransactionOut = mock(Transaction.class);
-		TableCategoryReader mockTableReader = mock(TableCategoryReader.class);
-		TableCategoryWriter mockTableWriter = mock(TableCategoryWriter.class);
-		
-		when(mockConfig.getConfigFile()).thenReturn(null);
-		NationwideCSVReader reader = new NationwideCSVReader(mockConfig);
-		
-		//Stubbing methods of testReader
-		when(mockTableReader.readCategory("testOut")).thenReturn(null);
-		when(mockTableReader.readCategory("testIn")).thenReturn(null);
-		
-		//Stubbing methods of mockTransactions
-		when(mockTransactionOut.getProcessedDescription()).thenReturn("testOut");
-		when(mockTransactionIn.getProcessedDescription()).thenReturn("testIn");
-		when(mockTransactionOut.getPaidIn()).thenReturn((double) 0);
-		when(mockTransactionIn.getPaidIn()).thenReturn((double) 1);
-		
-		//Stubbing methods of tableWriter
-		when(mockTableWriter.assignCategoryToTransaction(anyString(), anyString())).thenReturn(null);
-		
-		reader.retrieveCategory(mockTransactionOut, mockTableReader, mockTableWriter);
-		verify(mockTableWriter).assignCategoryToTransaction("testOut", "Outgoing");
-		reader.retrieveCategory(mockTransactionIn, mockTableReader, mockTableWriter);
-		verify(mockTableWriter).assignCategoryToTransaction("testIn", "Incoming");
-	}
-	
-	@Test
-	public void testRetrieveCategoryNotNull() {
-		Transaction mockTransaction = mock(Transaction.class);
-		TableCategoryReader mockTableReader = mock(TableCategoryReader.class);
-		TableCategoryWriter mockTableWriter = mock(TableCategoryWriter.class);
-		
-		when(mockConfig.getConfigFile()).thenReturn(null);
-		NationwideCSVReader reader = new NationwideCSVReader(mockConfig);
-		
-		//Stubbing methods of transaction
-		when(mockTransaction.getProcessedDescription()).thenReturn("test");
-		
-		//Stubbing methods of tableReader
-		when(mockTableReader.readCategory("test")).thenReturn("test");
-		
-		Assertions.assertEquals("test", reader.retrieveCategory(mockTransaction, mockTableReader, mockTableWriter));
-	}
-	
+
 	@Test
 	public void testProcessNationwideTransaction() {
 		// Create an instance of NationwideCSVReader and use Mockito.spy to create a

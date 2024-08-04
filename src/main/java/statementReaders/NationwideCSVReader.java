@@ -178,13 +178,14 @@ public class NationwideCSVReader extends StatementReader {
 		if (readCategory == null) {
 			String inOrOut;
 			// Would be ideal to complete a switch here? - but cannot work with doubles?
+			// we could mess it up here -> for the assigning make it work differently
 			if (transaction.getPaidIn() > 0) {
 				inOrOut = "Incoming";
+				readCategory = tableWriter.assignCategoryToTransaction(transaction.getDate(), transaction.getProcessedDescription(), transaction.getPaidIn(), inOrOut);
 			} else {
 				inOrOut = "Outgoing";
+				readCategory = tableWriter.assignCategoryToTransaction(transaction.getDate(), transaction.getProcessedDescription(), transaction.getPaidOut(), inOrOut);
 			}
-			//THIS IS WHERE TO MAKE CHANGES
-			readCategory = tableWriter.assignCategoryToTransaction(transaction.getProcessedDescription(), inOrOut);
 		}
 
 		return readCategory;
