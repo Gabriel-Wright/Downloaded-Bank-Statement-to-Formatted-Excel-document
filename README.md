@@ -24,9 +24,10 @@ These SQLite DB's can then be exported into a formatted Excel File within the pr
 Either clone the repo and build using Maven:
 'mvn clean package' and find the jar in the target folder.
 'mvn test' run all unit tests
-
 OR download latest release and run .jar executable, will have guide file attached in correct location
 
+------
+More info on the project can be read here: https://gabriel-wright.com/projects/early-dev-projects/
 
 
  
