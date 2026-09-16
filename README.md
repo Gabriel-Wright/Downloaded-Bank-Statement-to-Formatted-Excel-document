@@ -27,7 +27,7 @@ Either clone the repo and build using Maven:
 OR download latest release and run .jar executable, will have guide file attached in correct location
 
 ------
-More info on the project can be read here: https://gabriel-wright.com/projects/early-dev-projects/
+More info on the project can be read here: https://gabriel-wright.com/software-projects/early-dev-projects/
 
 
  
